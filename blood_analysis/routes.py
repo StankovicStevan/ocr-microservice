@@ -73,7 +73,8 @@ def upload_image():
         return jsonify({'error': 'Unsupported file type'}), 400
 
     values_out_of_range, values_in_range = extract_data(text_data)
-    user_id = 6
+    current_user = get_jwt_identity()
+    user_id = current_user["user_id"]
     laboratory_report = laboratory_reports.insert_one({"user_id": user_id, "datetime": datetime.now(),
                                                        "values_out_of_range": values_out_of_range,
                                                        "values_in_range": values_in_range})
